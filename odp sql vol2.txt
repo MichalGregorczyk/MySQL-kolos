@@ -1,0 +1,52 @@
+1.	insert into MGsprzedawcy (id_sp,imie,id_sk)values(15,"Bolek",7);
+2.	insert into MGtowary(id_to,towar,cena,id_mag)values(4,chleb,3.50,99);
+3.	insert into MGsprzedaz(id_sp,id_to,sztuki,data)values(15,4,3,2019-01-28);
+	insert into MGsprzedaz(id_sp,id_to,sztuki,data)values(15,4,2,2019-01-28);
+4.	select towar from MGtowary order by cena desc; //group by jest od najmniejszego
+
+5.	select MGsprzedaz.id,MGsprzedaz.id_sp,MGsprzedaz.id_to,MGsprzedaz.sztuki,MGsprzedaz.data from MGsprzedaz
+	join MGsprzedawcy on MGsprzedaz.id_sp=MGsprzedawcy.id_sp
+	join MGsklepy on MGsprzedawcy.id_sk=MGsklepy.id_sk
+	where MGsklepy.sklep="Restauracja";
+
+6.	select MGsprzedaz.id,MGsprzedaz.id_sp,MGsprzedaz.id_to,MGsprzedaz.sztuki,MGsprzedaz.data from MGsprzedaz
+	join MGtowary on MGsprzedaz.id_to=MGtowary.id_to
+	where MGtowary.towar="chleb";
+
+7.	select MGsprzedaz.id,MGsprzedaz.id_sp,MGsprzedaz.id_to,MGsprzedaz.sztuki,MGsprzedaz.data from MGsprzedaz
+	join MGsprzedawcy on MGsprzedaz.id_sp=MGsprzedawcy.id_sp
+	join MGsklepy on MGsprzedawcy.id_sk=MGsklepy.id_sk
+	join MGtowary on MGsprzedaz.id_to=MGtowary.id_to
+	where MGsklepy.sklep="Restauracja" AND MGtowary.towar="chleb"
+
+8.	select sum(sztuki) from MGsprzedaz;
+
+9. 	select sum(sztuki) from MGsprzedaz where id_to=4;
+
+10. 	select sum(sztuki*cena) from MGsprzedaz join MGtowary on MGsprzedaz.id_to=MGtowary.id_to where towary.towar="chleb";
+
+11. 	select sum(sztuki*cena) from MGsprzedaz
+	join MGtowary on MGsprzedaz.id_to=MGtowary.id_to
+	join MGsprzedawcy on MGsprzedaz.id_sp=MGsprzedawcy.id_sp
+	join MGsklepy on MGsprzedawcy.id_sk=MGsklepy.id_sk
+	where MGsklepy.sklep="delikatesy" and towary.towar="chleb";
+
+12.	select id from MGsprzedaz where sztuki=(select max(sztuki) from MGsprzedaz);
+
+13.	update MGsklepy set sklep="delikatesy Kraków" where sklep="delikatesy";
+
+14.	update MGtowary set cena=(cena*0,9);
+
+15.     delete from MGsprzedaz where sztuki is NULL;
+
+16.	select * from MGsprzedawcy 
+	join MGsklepy on MGsprzedawcy.id_sk=MGsklepy.id_sk
+	join MGmiasta on MGsklepy.id_m=MGmiasta.id_m
+	where MGmiasta.miasto="Kraków";
+
+17.	select sum(sztuki) from MGsprzedaz
+	join MGtowary on MGsprzedaz.id_to=MGtowary.id_to
+	join MGsprzedawcy on MGsprzedaz.id_sp=MGsprzedawcy.id_sp
+	join MGsklepy on MGsprzedawcy.id_sk=MGsklepy.id_sk
+	join MGmiasta on MGsklepy.id_m=MGmiasta.id_m
+	where MGmiasta.miasto="Kraków"
