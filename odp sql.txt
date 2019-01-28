@@ -1,0 +1,52 @@
+1.	insert into sprzedawcy (id_sp,imie,id_sk)values(15,"Bolek",7);
+2.	insert into towary(id_to,towar,cena,id_mag)values(4,chleb,3.50,99);
+3.	insert into sprzedaz(id_sp,id_to,sztuki,data)values(15,4,3,2019-01-28);
+	insert into sprzedaz(id_sp,id_to,sztuki,data)values(15,4,2,2019-01-28);
+4.	select towar from towary order by cena desc; //group by jest od najmniejszego
+
+5.	select sprzedaz.id,sprzedaz.id_sp,sprzedaz.id_to,sprzedaz.sztuki,sprzedaz.data from sprzedaz
+	join sprzedawcy on sprzedaz.id_sp=sprzedawcy.id_sp
+	join sklepy on sprzedawcy.id_sk=sklepy.id_sk
+	where sklepy.sklep="Restauracja";
+
+6.	select sprzedaz.id,sprzedaz.id_sp,sprzedaz.id_to,sprzedaz.sztuki,sprzedaz.data from sprzedaz
+	join towary on sprzedaz.id_to=towary.id_to
+	where towary.towar="chleb";
+
+7.	select sprzedaz.id,sprzedaz.id_sp,sprzedaz.id_to,sprzedaz.sztuki,sprzedaz.data from sprzedaz
+	join sprzedawcy on sprzedaz.id_sp=sprzedawcy.id_sp
+	join sklepy on sprzedawcy.id_sk=sklepy.id_sk
+	join towary on sprzedaz.id_to=towary.id_to
+	where sklepy.sklep="Restauracja" AND towary.towar="chleb"
+
+8.	select sum(sztuki) from sprzedaz;
+
+9. 	select sum(sztuki) from sprzedaz where id_to=4;
+
+10. 	select sum(sztuki*cena) from sprzedaz join towary on sprzedaz.id_to=towary.id_to where towar="chleb";
+
+11. 	select sum(sztuki*cena) from sprzedaz
+	join towary on sprzedaz.id_to=towary.id_to
+	join sprzedawcy on sprzedaz.id_sp=sprzedawcy.id_sp
+	join sklepy on sprzedawcy.id_sk=sklepy.id_sk
+	where sklepy.sklep="delikatesy" and towar="chleb";
+
+12.	select id from sprzedaz where sztuki=(select max(sztuki) from sprzedaz);
+
+13.	update sklepy set sklep="delikatesy Kraków" where sklep="delikatesy";
+
+14.	update towary set cena=(cena*0,9);
+
+15.     delete from sprzedaz where sztuki is NULL;
+
+16.	select * from sprzedawcy 
+	join sklepy on sprzedawcy.id_sk=sklepy.id_sk
+	join miasta on sklepy.id_m=miasta.id_m
+	where miasta.miasto="Kraków";
+
+17.	select sum(sztuki) from sprzedaz
+	join towary on sprzedaz.id_to=towary.id_to
+	join sprzedawcy on sprzedaz.id_sp=sprzedawcy.id_sp
+	join sklepy on sprzedawcy.id_sk=sklepy.id_sk
+	join miasta on sklepy.id_m=miasta.id_m
+	where miasta.miasto="Kraków"
